@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Indic OCR — Interview Prep</title>
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#666;--line:#e3e3e3;--acc:#0b5ed7;--code:#f6f8fa}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 -apple-system,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:40px 16px 80px}
+h1{font-size:1.9rem;margin:0 0 .3em}
+.sub{color:var(--mut);margin:0 0 2em}
+.toc{border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin-bottom:2em}
+.toc ol{margin:0;padding-left:1.2em}
+.toc li{margin:.25em 0}
+.toc a{color:var(--acc);text-decoration:none}
+.toc a:hover{text-decoration:underline}
+.btns{margin:0 0 1.5em;display:flex;gap:10px}
+button{font:inherit;padding:6px 14px;border:1px solid var(--line);background:#fafafa;color:var(--fg);border-radius:7px;cursor:pointer}
+button:hover{background:#f0f0f0}
+.turn{border-top:1px solid var(--line);padding-top:1.4em;margin-top:1.8em}
+h2.tn{font-size:1.15rem;margin:0 0 .6em}
+.me{background:#f0f6ff;border-left:3px solid var(--acc);padding:12px 16px;border-radius:0 8px 8px 0}
+.me p{margin:.4em 0}
+details{margin-top:.8em}
+summary{cursor:pointer;color:var(--mut);font-size:.9rem;padding:6px 0}
+.resp{border-left:2px solid var(--line);padding-left:16px;margin-top:.6em}
+.say p{margin:.5em 0}
+.say h2{font-size:1.1rem;margin:1.2em 0 .4em}
+.say h3{font-size:1rem;margin:1.1em 0 .3em}
+.say hr{border:none;border-top:1px dashed var(--line);margin:1.4em 0}
+.say blockquote{margin:.8em 0;padding:.2em 14px;border-left:3px solid var(--line);color:var(--fg)}
+.say a{color:var(--acc)}
+.tool{color:var(--mut);font-size:.85rem;font-family:ui-monospace,Consolas,monospace;margin:.35em 0}
+pre{background:var(--code);border-radius:8px;padding:12px 14px;overflow-x:auto;font-size:.84rem}
+code{font-family:ui-monospace,Consolas,monospace}
+:not(pre)>code{background:var(--code);padding:1px 5px;border-radius:4px;font-size:.9em}
+table{border-collapse:collapse;margin:.6em 0;display:block;overflow-x:auto}
+td,th{border:1px solid var(--line);padding:4px 10px;text-align:left}
+@media(prefers-color-scheme:dark){
+:root{--bg:#16181c;--fg:#e6e6e6;--mut:#9aa0a6;--line:#2c3036;--acc:#6aa9ff;--code:#1d2026}
+.me{background:#1b2430}
+button{background:#22262c;color:#e6e6e6}
+button:hover{background:#2a2f36}}
+</style></head><body><div class="wrap">
+<h1>Indic Document OCR — Interview Prep</h1>
+<p class="sub">Mock interview with Claude: 9 turns, each answer rated against the project's measured numbers</p>
+<div class="btns"><button onclick="document.querySelectorAll('details').forEach(function(d){d.open=true})">Expand all</button><button onclick="document.querySelectorAll('details').forEach(function(d){d.open=false})">Collapse all</button></div>
+<nav class="toc"><ol><li><a href="#t1">Turn 1</a> — Interview prep request</li><li><a href="#t2">Turn 2</a> — Q1: the 60-second pitch</li><li><a href="#t3">Turn 3</a> — Q2: is beating Gemini fair?</li><li><a href="#t4">Turn 4</a> — Q3: printed_seen vs printed_unseen</li><li><a href="#t5">Turn 5</a> — Q4: fixing typeface overfitting</li><li><a href="#t6">Turn 6</a> — What is CTC? (explanation)</li><li><a href="#t7">Turn 7</a> — Q5: CTC in my own words</li><li><a href="#t8">Turn 8</a> — Q6: BiLSTM and bidirectionality</li><li><a href="#t9">Turn 9</a> — Q7: one model for nine scripts, and wrap-up</li></ol></nav>
+<section class="turn" id="t1"><h2 class="tn">Turn 1</h2><div class="me"><p>from the indic-document-OCR project, prepare me for the interview by asking me questions regarding it.</p></div><details><summary>Claude's response</summary><div class="resp"><div class="tool">▸ Bash: List project folders and OCR project contents</div><div class="tool">▸ Read: memory/ocr-division-of-labour.md</div><div class="tool">▸ Read: indic-document-ocr/REPORT.md</div><div class="tool">▸ Bash: Inspect OCR deployment files and hosting notes</div><div class="say"><p>I've read through <a href="indic-document-ocr/REPORT.md">REPORT.md</a> and the Lambda deployment. I'll ask one question at a time, like an interviewer would. After each answer I'll mark it against your real numbers, point out anything you missed, and ask a follow-up if the answer leaves an opening. The questions go from the pitch to data, model and CTC, training, results, and then deployment.</p>
+<p>Answer in your own words, as you would out loud. A rough answer is fine.</p>
+<hr />
+<p><strong>Q1. Give me the 60-second pitch for this project. What does it do, how big is it, and why would anyone use it instead of just uploading the page to ChatGPT or Gemini?</strong></p></div></div></details></section><section class="turn" id="t2"><h2 class="tn">Turn 2</h2><div class="me"><p>This is a multi-lingual OCR model that can be used on a device locally with high speeds and better accuracies than some of the frontend LLMs. There are specific models for different languages available, but this single model is sufficient for about 13 different languages and 9 different scripts with slightely better performance compared to them.</p></div><details><summary>Claude's response</summary><div class="resp"><div class="say"><p><strong>Rating: 5/10.</strong> The structure is right, but there's one factual slip, you gave no numbers, and one claim goes further than your results support.</p>
+<p><strong>Fix these:</strong></p>
+<ul>
+<li><strong>It's 12 languages, not 13.</strong> That's 9 scripts. Urdu is excluded, which an interviewer may ask about.</li>
+<li><strong>Say "frontier vision-language models", not "frontend LLMs".</strong></li>
+<li><strong>"Better than LLMs" with no qualifier is a trap.</strong> You beat them on one benchmark: 300 clean printed Devanagari lines, 87.77 chrF++ against Gemini 2.5 Flash's 86.30. Always say which benchmark.</li>
+<li><strong>"Slightly better" undersells you.</strong> Against the published Mozhi models (one CRNN per language), you win word accuracy in all 9 scripts. Kannada is +8.5 points, which is not slight.</li>
+<li><strong>You left out the reasons to use it at all:</strong> it runs offline, costs nothing per page, and private documents never leave the machine.</li>
+</ul>
+<p><strong>A stronger version:</strong></p>
+<blockquote>
+<p>"One 2.6-million-parameter CRNN, a 10 MB ONNX file, that reads printed text in 9 Indian scripts and 12 languages on a laptop CPU at about 5 ms per word, with no GPU and no network. One model beats the nine separate published per-language models on word accuracy in all 9 scripts. On a 300-line Devanagari benchmark it scores 87.77 chrF++, slightly above Gemini 2.5 Flash's 86.30, at roughly 1/3000th the size. Unlike ChatGPT, it costs nothing per page, works offline, and private documents never leave the machine."</p>
+</blockquote>
+<hr />
+<p><strong>Q2 (the follow-up an interviewer will ask right away):</strong> You said it beats Gemini. Is that fair? What exactly did you measure, and what can Gemini do that your model can't?</p></div></div></details></section><section class="turn" id="t3"><h2 class="tn">Turn 3</h2><div class="me"><p>No, not exactly better. 87.77 vs 86.30 chrF++ on 300 word crops is a near tie.  I measured one script (Devanagari)&#x27;s clean printed scans, word-level crops, chrF++ values. Gemini is better at full pages (layout, tables, reading order), handwriting understanding, scripts outside the nine I trained on, context-based self-correction.</p></div><details><summary>Claude's response</summary><div class="resp"><div class="tool">▸ Grep: benchmark line/word/crop wording in the trainer, scripts and reports (no matches)</div><div class="tool">▸ Bash: Find how the benchmark is loaded in the trainer</div><div class="tool">▸ Bash: Check benchmark data format and baseline notes</div><div class="say"><p><strong>Rating: 8/10.</strong> You framed it as a near tie, gave the exact numbers, and listed what Gemini does better. That's what an interviewer wants to hear.</p>
+<p><strong>Two things to add:</strong></p>
+<ul>
+<li><strong>The benchmark's word-level format favours your model.</strong> It is 300 scans of Sanskrit-typeset print, mostly single words (median 1 word, about 10 characters). Its own README says this format puts page-oriented models at a disadvantage. Your model only does recognition on pre-cropped words, so it never runs the detection step that drags Gemini's and EasyOCR's scores down. Saying this yourself, before anyone asks, is the strongest form of this answer (<a href="indic-document-ocr/reports/BASELINE.md">BASELINE.md §2</a>).</li>
+<li><strong>A 1.47-point gap is within noise at n=300.</strong> Between epochs 4 and 6 your own benchmark score moved by about 1.5 points (87.45 → 85.94 → 86.82). That's real evidence for "near tie".</li>
+</ul>
+<p>You were right to say "word crops". <a href="indic-document-ocr/REPORT.md">REPORT.md</a> calls them "lines" in §2.1 and §7.4, which is wrong. Use your wording if the report comes up.</p>
+<hr />
+<p><strong>Q3.</strong> Your results table has <code>printed_seen</code> and <code>printed_unseen</code>. What's the difference between them, which one should I believe, and why does Odia drop from 97.59 to 76.83 chrF++ between them?</p></div></div></details></section><section class="turn" id="t4"><h2 class="tn">Turn 4</h2><div class="me"><p>printed_seen are the test images from books that are also in the training. printed_unseen are the test images that are from a different book and possibly a different style of writing. Believe printed_unseen. It&#x27;s the only one that answers &quot;will this work on a document I hand it tomorrow&quot;. This is because the model partly memorised those Odia typefaces rather than learning the script. Odia has very round, visually similar glyphs that are separated more by font-specific details than by structure.</p></div><details><summary>Claude's response</summary><div class="resp"><div class="tool">▸ Grep: Odia in reports/*.md</div><div class="tool">▸ Bash: Read blind test per-script table</div><div class="say"><p><strong>Rating: 8/10.</strong> The definitions are right, you chose the right number to believe, and your "document I hand it tomorrow" line works well in an interview.</p>
+<p><strong>What's missing:</strong></p>
+<ul>
+<li><strong>Say why the split is by book.</strong> Crops from one book share the typeface, scanner, paper and print run. A random split would put near-identical images in both train and test, and the report would claim about 97% for every script. The Odia drop is only visible because whole books were withheld from training. This is also your evidence that there's no leakage.</li>
+<li><strong>Mention Tamil too.</strong> It drops 96.73 → 85.75. Every other script loses only 1–2 points. Two outliers is a pattern; one outlier sounds like a fluke.</li>
+</ul>
+<p><strong>Be careful with the glyph explanation.</strong> "Odia's round, similar glyphs are separated by font-specific details" sounds convincing, but nothing in your reports measures it. There is no per-character confusion analysis for Odia. If you use it, present it as a hypothesis: <em>"My guess is X. I'd test it by building a confusion matrix of the held-out Odia errors and checking whether they cluster on visually similar pairs."</em> That way, "how do you know?" doesn't catch you out.</p>
+<hr />
+<p><strong>Q4 (natural follow-up):</strong> So the model overfits to typefaces. How would you fix that, and do you already have any evidence from this project that your fix would work?</p></div></div></details></section><section class="turn" id="t5"><h2 class="tn">Turn 5</h2><div class="me"><p>Extending synthetic font rendering to all nine scripts would fix it better. Currently only Devanagari and Kannada get it. Odia and Tamil see only the typefaces the books use. This is just a small assumption from how the trained model is performing and could be verified by training Odia on 25 different fonts to check the drop of chrF++.</p></div><details><summary>Claude's response</summary><div class="resp"><div class="say"><p><strong>Rating: 7/10.</strong> You picked the right fix, and proposing a controlled experiment instead of just asserting the fix works is the right instinct. But you said you had no evidence, and you do.</p>
+<p><strong>Your evidence is the blind test</strong> (<a href="indic-document-ocr/reports/BLIND_TEST.md">BLIND_TEST.md §3</a>): exact match on real words in 16 fonts the model never saw.</p>
+<table>
+<thead>
+<tr>
+<th>Script</th>
+<th>Synthetic fonts in training?</th>
+<th>Exact match</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kannada</td>
+<td>yes</td>
+<td><strong>95.7%</strong></td>
+</tr>
+<tr>
+<td>Devanagari</td>
+<td>yes</td>
+<td><strong>92.3%</strong></td>
+</tr>
+<tr>
+<td>Gujarati</td>
+<td>no</td>
+<td>79.3%</td>
+</tr>
+<tr>
+<td>Odia</td>
+<td>no</td>
+<td>54.0%</td>
+</tr>
+<tr>
+<td>Tamil</td>
+<td>no</td>
+<td>19.7%</td>
+</tr>
+<tr>
+<td>Telugu</td>
+<td>no</td>
+<td>17.0%</td>
+</tr>
+</tbody>
+</table>
+<p>The only two scripts trained on synthetic font renders are the only two that hold up on unseen fonts. Lead with that, then give the caveat: <em>"It's correlational, because Devanagari is also the highest-resource script. So I'd confirm it with a controlled run."</em></p>
+<p><strong>Make the experiment more specific.</strong> "Train Odia on 25 fonts" leaves open what you test on. If you evaluate on those same fonts, the experiment proves nothing. Say: <em>"Add synthetic Odia rendering, keep some fonts out of training, and compare Odia <code>printed_unseen</code> and blind-test scores before and after, with everything else unchanged."</em></p>
+<hr />
+<p><strong>Q5. Model and loss:</strong> Explain CTC to an interviewer who knows ML but not OCR. What problem does it solve, what is the blank symbol for, and why did you need <code>zero_infinity=True</code>?</p></div></div></details></section><section class="turn" id="t6"><h2 class="tn">Turn 6</h2><div class="me"><p>I don&#x27;t know whatCTC means here. could you explain.</p></div><details><summary>Claude's response</summary><div class="resp"><div class="say"><p>CTC is the core of your model, so it's worth getting solid. Here it is from the ground up.</p>
+<h2>CTC = Connectionist Temporal Classification</h2>
+<p>It's the <strong>loss function</strong> your model trains with. Your trainer computes <code>L_CTC(main head) + 0.3 × L_CTC(auxiliary head)</code>.</p>
+<h3>1. The problem it solves</h3>
+<p>Your CNN + BiLSTM doesn't output a word. It slides across the image and outputs one prediction for every narrow vertical slice:</p>
+<pre><code>image width 256 px  →  CNN shrinks width by 4  →  64 slices (&quot;timesteps&quot;, T)
+each slice outputs a probability over 973 classes
+</code></pre>
+<p>The label is just a string, say 5 characters (U = 5). So you have 64 predictions and 5 correct characters, and <strong>nobody has marked which slice belongs to which character</strong>. Ordinary cross-entropy needs a target for every slice, so you can't use it here. Hand-labelling character positions for 1.2 million images isn't possible either.</p>
+<h3>2. The trick: a "blank" class</h3>
+<p>Add one extra class meaning "no character here". <strong>That's why you have 973 classes: 972 characters + 1 blank.</strong> To turn 64 slice predictions into text, apply a collapse rule:</p>
+<blockquote>
+<p><strong>merge adjacent repeats, then delete blanks</strong></p>
+</blockquote>
+<pre><code>slices:          म म – – म म – –      (&quot;–&quot; = blank)
+merge repeats:   म – म –
+delete blanks:   म म       →  &quot;मम&quot;
+</code></pre>
+<p>The blank has <strong>two jobs</strong>:</p>
+<ul>
+<li><strong>Filling space.</strong> Most slices fall between or inside characters, and blank lets them output nothing.</li>
+<li><strong>Separating repeated characters.</strong> Without a blank in between, <code>म म म म</code> collapses to a single <code>म</code>. Getting "मम" needs at least one blank between the two.</li>
+</ul>
+<h3>3. The loss</h3>
+<p>Many different slice sequences collapse to the same word (<code>म म – म</code>, <code>म – – म</code>, <code>– म – म</code>, …). CTC <strong>adds up the probability of every sequence that produces the correct label</strong> and takes −log of that sum:</p>
+<pre><code>loss = −log( Σ P(every path that collapses to the right word) )
+</code></pre>
+<p>So the model never needs to know where each character sits. It just pushes up whatever paths spell the right word, and it learns the positions by itself. The number of paths grows exponentially, so they're never listed one by one. A dynamic-programming algorithm (forward–backward) computes the sum in O(T·U) time.</p>
+<p>At inference you use <strong>greedy decoding</strong>: take the most likely class in each slice, then collapse. You used no language model, so your scores measure only what the model actually sees.</p>
+<h3>4. Why <code>zero_infinity=True</code></h3>
+<p>A label can only be produced if there are enough slices:</p>
+<pre><code>T ≥ U + (number of adjacent repeated characters)    ← each repeat needs a blank between
+</code></pre>
+<p>If a crop is too narrow for its label, <strong>no path can produce it</strong>. Its probability is 0, so its loss is −log 0 = <strong>infinity</strong>. One infinite loss turns the gradients into NaN and ruins the whole batch. <code>zero_infinity=True</code> sets those losses to zero, so the batch simply skips that sample.</p>
+<p><strong>This is also why you chose height 48 instead of 32.</strong> Resizing keeps the aspect ratio, so at height 48 every word comes out 1.5× wider, which gives 1.5× more slices. You measured this: the share of training rows that couldn't be learned fell from <strong>1.58% at height 32 to 0.39% at 48</strong>, four times fewer.</p>
+<h3>The 20-second interview version</h3>
+<blockquote>
+<p>"My model outputs one prediction per vertical slice of the word, but the label is just a string with no positions. CTC adds a blank class, defines a collapse rule (merge repeats, drop blanks), and the loss is the negative log of the summed probability of every slice-sequence that collapses to the correct label, computed by dynamic programming. The blank both fills gaps and separates double letters. If an image is too narrow to fit its label, the loss is infinite, so I set <code>zero_infinity=True</code>. That same constraint is why I used height 48: more width, more timesteps, 4× fewer unlearnable samples."</p>
+</blockquote>
+<hr />
+<p><strong>Q5 (retry):</strong> In your own words, without looking: why can't you train this with ordinary cross-entropy, and what are the two jobs of the blank?</p></div></div></details></section><section class="turn" id="t7"><h2 class="tn">Turn 7</h2><div class="me"><p>cross-entropy scores position against position — it needs to know that frame x corresponds to label character x. Here, nothing tells you where each character starts and ends. CTC does it by treating the alignment as latent and summing over all of them. Blank is needed so that it ignores the frame landing on the white space or a frame on the second half of a wide glyph already emitted. It should also keep in mind to include a repeating character (without blank, every repeating character would just become one).</p></div><details><summary>Claude's response</summary><div class="resp"><div class="tool">▸ Bash: Look for any measured Transformer vs LSTM comparison</div><div class="tool">▸ Bash: Read the LSTM vs transformer ablation notes</div><div class="tool">▸ Bash: Check for any trained transformer-neck run</div><div class="say"><p><strong>Rating: 9/10.</strong> "Treat the alignment as latent and sum over all of them" is exactly how an ML interviewer wants to hear it. You got both jobs of the blank right.</p>
+<p>One small precision point: frames on the second half of a wide glyph can also just repeat the same character, and the merge step folds them in. So blank isn't the only way to cover them. When you say it aloud, list the two jobs cleanly: "<strong>fills frames with no character</strong>, and <strong>separates genuine double letters</strong>."</p>
+<p><strong>Bonus point for Q2:</strong> <a href="indic-document-ocr/reports/RESULTS.md">RESULTS.md</a> has a measured noise check. Two runs with the same config and the same seed differed by <strong>1.92 chrF++</strong> on the benchmark, because GPU kernels aren't deterministic. Your own notes say to quote <strong>87.7 ± 1.0</strong>, described as "comparable to Gemini". That's the hard evidence behind "near tie".</p>
+<hr />
+<p><strong>Q6. Architecture:</strong> Your model is CNN → BiLSTM → linear layer. Why a BiLSTM rather than a Transformer? And why does it need to be <strong>bi</strong>directional for Indic scripts in particular?</p></div></div></details></section><section class="turn" id="t8"><h2 class="tn">Turn 8</h2><div class="me"><p>we are using a BilSTM because we are recognising word by word where the sequence length is tiny and no need of a transformer that uses attention. I don&#x27;t know why bi-directional was used for indic script in particular.</p></div><details><summary>Claude's response</summary><div class="resp"><div class="say"><p><strong>Rating: 5/10.</strong> The LSTM reason is partly right. The "bidirectional" half is a real gap, and it's an easy follow-up for an interviewer, so learn it.</p>
+<p><strong>BiLSTM vs Transformer:</strong></p>
+<ul>
+<li><strong>Your reason holds.</strong> Sequences are short (64 timesteps for a 256 px word) and context is local, so you don't need attention across the whole sequence.</li>
+<li><strong>The stronger reason is model size.</strong> At 2.6M parameters, an LSTM's built-in sense of order and locality helps. A Transformer has to learn positional structure from data, which usually takes more data or more parameters.</li>
+<li><strong>Honesty trap:</strong> <a href="indic-document-ocr/REPORT.md">REPORT.md</a> says "both were implemented; the LSTM wins at this scale." The flag <code>--neck transformer</code> exists, but I found no trained Transformer run anywhere: no history, no checkpoint, no results. <a href="indic-document-ocr/reports/RESULTS.md">RESULTS.md</a> lists it under <em>"Next runs"</em>. So don't say "I measured it". Say: <em>"I implemented it as an option but didn't train it head-to-head. I chose the LSTM for its inductive bias at this size, and a 1–2 point difference would be below my measured noise anyway."</em></li>
+</ul>
+<p><strong>Why bidirectional matters for Indic scripts:</strong></p>
+<p>In many Indic scripts, <strong>the order glyphs are drawn on the page differs from the order the characters are stored in Unicode.</strong></p>
+<pre><code>कि  (&quot;ki&quot;)   stored as:  क  then  ि        (consonant, then vowel sign)
+             drawn as:   ि  then  क        (vowel sign appears on the LEFT)
+</code></pre>
+<p>CTC emits characters <strong>in left-to-right time order</strong>. So at the leftmost slice, where the model sees the <code>ि</code> glyph, it must already output <code>क</code>, which is a consonant it hasn't reached yet. A forward-only LSTM at that point has seen nothing to its right. The <strong>backward LSTM brings in context from the right</strong>, so each slice knows what comes after it.</p>
+<p>This happens across your nine scripts:</p>
+<ul>
+<li><strong>Devanagari, Bengali, Odia:</strong> vowel signs drawn to the left (<code>ि</code>, <code>ে</code>, <code>େ</code>)</li>
+<li><strong>Tamil, Malayalam:</strong> vowel signs drawn to the left, and some split vowels that wrap around the consonant, with one part on each side (<code>ொ</code>, <code>ൊ</code>)</li>
+<li><strong>Devanagari reph:</strong> <code>र्</code> is stored <em>first</em> in <code>धर्म</code> but drawn as a hook on top of the <em>next</em> consonant, so here the problem runs the other way</li>
+</ul>
+<p><strong>20-second version:</strong></p>
+<blockquote>
+<p>"In Indic scripts, visual order and Unicode order often differ. In कि the vowel sign is drawn left of the consonant but stored after it. CTC emits left to right, so the model must output the consonant before it has visually reached it. The backward pass of the BiLSTM supplies that right-side context."</p>
+</blockquote>
+<hr />
+<p><strong>Q7.</strong> You trained one model for all nine scripts instead of nine separate models. Why? And wouldn't sharing capacity across nine scripts hurt the high-resource ones like Devanagari? What did you measure?</p></div></div></details></section><section class="turn" id="t9"><h2 class="tn">Turn 9</h2><div class="me"><p>one model so no script-ID router needed to get wrong. we can also convert mixed-script documents. It hurts devnagri just slightely ~1% on character accuracy, but wrods accuracy is still the same.This model wins word accuracy 9/9, character accuracy 8/9. Kannada gains +8.5pp word accuracy. Devanagari reduced by ~1.2 points.</p><p>I think I am done with this one now.</p></div><details><summary>Claude's response</summary><div class="resp"><div class="say"><p><strong>Q7 rating: 8/10.</strong> Your numbers are right, and the "no script-ID router to get wrong" point is good. Two additions:</p>
+<ul>
+<li><strong>Say why it helps.</strong> The scripts share the same structure (consonant + vowel sign + conjunct), so training them together helps the scripts with less data the most. That's why Kannada gains +8.5 points.</li>
+<li><strong>Know the caveat.</strong> The Mozhi baseline used a different training recipe, so some of that +8.5 may come from your training setup rather than from sharing across scripts. The clean proof would be a Kannada-only run with your exact recipe, which you haven't run. Also, "mixed-script documents" is plausible but you haven't measured it, and English isn't supported.</li>
+</ul>
+<h2>How the session went</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Topic</th>
+<th>Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Pitch</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Is beating Gemini fair?</td>
+<td>8</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>printed_seen</code> vs <code>printed_unseen</code></td>
+<td>8</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Fixing typeface overfitting</td>
+<td>7</td>
+</tr>
+<tr>
+<td>5</td>
+<td>CTC</td>
+<td>needed explaining, then 9</td>
+</tr>
+<tr>
+<td>6</td>
+<td>BiLSTM / bidirectional</td>
+<td>5</td>
+</tr>
+<tr>
+<td>7</td>
+<td>One model for nine scripts</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Revise before the interview:</strong></p>
+<ol>
+<li><strong>The 20-second CTC answer.</strong> Your model's loss is built on it, so expect it.</li>
+<li><strong>Why bidirectional:</strong> कि is drawn with the vowel sign first but stored consonant first.</li>
+<li><strong>Don't claim you measured LSTM against Transformer.</strong> You implemented the option but never trained it.</li>
+<li><strong>Blind-test evidence for synthetic fonts:</strong> Kannada 95.7% and Devanagari 92.3% exact match, against 17–79% for the other scripts.</li>
+<li><strong>Pitch facts:</strong> 12 languages, 9 scripts, 2.6M parameters, 10 MB, 5.3 ms per word, and the benchmark is mostly single words, which favours your model.</li>
+</ol>
+<p><strong>Not covered yet:</strong> training details (OneCycle schedule, CTC in float32 under mixed precision, batch size 64), metrics (never compare character accuracy against a published word-accuracy column), and deployment (projection-profile segmentation, ONNX, Lambda). We can do those another time.</p>
+<p><a href="indic-document-ocr/REPORT.md">REPORT.md</a> also has two wrong claims: it calls the benchmark "lines", and it says "the LSTM wins" without a run to back it. Want me to correct both?</p></div></div></details></section>
+</div></body></html>
